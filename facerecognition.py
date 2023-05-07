@@ -24,13 +24,13 @@ def facerecognition(input,database) :
 
     result = DeepFace.verify(inputimg_path, data_base_path, enforce_detection=False)
     confidence=(1-result['distance'])*100
-    confidence = str(round(confidence, 2))
+    confidence = round(confidence, 2)
 
     if result["verified"]:
-        print("The faces with estimated " +confidence + "% are matched!")
+        print("The faces with confidence " +str(confidence) + "% are matched!")
         return True
     else:
-        print("The faces with estimated " +confidence + "% are not matched")
+        print("The faces with confidence " + str(100-confidence) + "% are not matched")
         return False
 
 if __name__ == "__main__":
