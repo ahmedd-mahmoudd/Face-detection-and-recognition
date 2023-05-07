@@ -92,17 +92,13 @@ class MainWindow(QMainWindow):
         mp_drawing = mp.solutions.drawing_utils
         mp_face_mesh = mp.solutions.face_mesh
 
-        # Convert the image to RGB format
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
 
-        # Initialize the face mesh model
         with mp_face_mesh.FaceMesh(static_image_mode=True) as face_mesh:
-            # Process the image and extract the face mesh
             results = face_mesh.process(image_rgb)
 
             if results.multi_face_landmarks:
                 for face_landmarks in results.multi_face_landmarks:
-                    # Draw the face mesh on the image
                     for idx, connection in enumerate(mp_face_mesh.FACEMESH_TESSELATION):
                         if idx % 3 != 0:
                             continue
