@@ -1,7 +1,7 @@
 
 # Face Recognition Application
 
-This is a PyQt5-based application that performs face recognition using the Mediapipe library. It allows users to load an input image and a database image, and then compares the faces in both images to determine if they match.
+This is a PyQt5-based application that performs face recognition using the Deepface library. It allows users to load an input image and a database image, and then compares the faces in both images to determine if they match.
 
 ## Installation
 
@@ -9,7 +9,7 @@ This is a PyQt5-based application that performs face recognition using the Media
 
     git clone https://github.com/ahmedd-mahmoudd/face-recognition-app.git
 
-2. Install the required dependencies. Make sure you have Python 3 and pip installed, and then run:
+2. Install the required dependencies. Make sure you have Python 3(3.10.9) and pip installed, and then run:
 
     pip install -r requirements.txt
 

@@ -51,4 +51,4 @@ def detect_faces(input_image_path):
 
 
 if __name__ == "__main__":
-    detect_faces("input\\liam hemsworth.jpg")
+    detect_faces("input\\Chris Hemsworth.jpg")

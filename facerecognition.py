@@ -34,4 +34,4 @@ def facerecognition(input,database) :
         return False
 
 if __name__ == "__main__":
-    facerecognition("input\\obama.jpg","Database\\obama3.png")
+    facerecognition("input\\obama.jpg","Database\\obama.png")
