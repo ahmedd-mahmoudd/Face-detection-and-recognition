@@ -37,4 +37,4 @@ def compare_images():
     return jsonify(response)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='192.168.3.15', port=80 , debug=True)
