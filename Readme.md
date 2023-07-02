@@ -1,49 +1,42 @@
+# Frontend
 
-# Face Recognition Application
+This directory contains the frontend code for our web application. It's responsible for the user interface, presentation logic, and client-side interactions.
 
-This is a PyQt5-based application that performs face recognition using the Deepface library. It allows users to load an input image and a database image, and then compares the faces in both images to determine if they match.
+## Technologies Used
 
-## Installation
+- HTML5
+- CSS3
+- JavaScript
+- [Library/Framework] Flask
 
-1. Clone the repository:
+## Project Structure
 
-    git clone  https://github.com/ahmedd-mahmoudd/face-recognition-app.git
+- `index.html`: The main HTML file that serves as the entry point for the application.
+- `css/`: Directory containing CSS files for styling the web pages.
+- `js/`: Directory containing JavaScript files for client-side functionality.
+- `images/`: Directory for storing image assets used in the application.
 
-2. Install the required dependencies. Make sure you have Python 3(3.10.9) and pip installed, and then run:
+## Getting Started
 
-    pip install -r requirements.txt
+1. Clone the repository: `git clone https://github.com/ahmedd-mahmoudd/Face-detection-and-recognition.git`
+2. Navigate to the `frontendFace-detection-and-recognition` directory: `cd Face-detection-and-recognition`
+3. Open `index.html` in your web browser to view the application.
 
-3. Run the application:
+## Running the Server
 
-    python main.py
+1. Make sure you have Python installed on your machine.
+2. Open a terminal and navigate to the `Face-detection-and-recognition` directory.
+3. Install the dependansis by running the following command: `pip install -r requirements.txt`
+4. Start the server by running the following command: `python frontend.py`
+5. Open your web browser and enter `http://localhost:80` to access the application.
 
-## Usage
+## Development
 
-1. When the application starts, a window will appear with two buttons: "Load Input Image" and "Load Database Image".
-
-2. Click the "Load Input Image" button to select an input image file (.png or .jpg) from your local system.
-
-3. Click the "Load Database Image" button to select a database image file (.png or .jpg) from your local system.
-
-4. After selecting both images, click the "Compare" button to perform face recognition.
-
-5. The application will display the input and database images side by side, with facial contours drawn on the images using Mediapipe.
-
-6. The application will display the result of the face recognition process, indicating whether the faces in the two images match or not.
-
-## Folder Structure
-
-- `main.py`: The main script that initializes the application and connects the UI elements.
-- `facerecognition.py`: The module that performs the face recognition.
-- `GUI/`: A folder containing the application's icon (`icon.ico`).
-
-## Dependencies
-
-- Python 3
-- PyQt5
-- OpenCV (cv2)
-- Mediapipe
+- Modify HTML, CSS, and JavaScript files as needed.
+- Use a code editor or integrated development environment (IDE) for ease of development.
+- Test the application in different web browsers to ensure cross-browser compatibility.
+- Consider using a build system or bundler (e.g., Webpack, Parcel) for optimizing and packaging the frontend assets.
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
