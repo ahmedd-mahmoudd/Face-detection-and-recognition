@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="tools">
+            <div class="circle">
+              <span class="red box"></span>
+            </div>
+            <div class="circle">
+              <span class="yellow box"></span>
+            </div>
+            <div class="circle">
+              <span class="green box"></span>
+            </div>
+          </div>
+          <div class="card__content">
+          </div>
+<form class="form" id="form">
+    <span class="input-span">
+    <label for="email" class="label">Email</label>
+    <input type="email" name="email" id="email"></span>
+    <span class="input-span">
+    <label for="password" class="label">Password</label>
+    <input type="password" name="password" id="password"></span>
+    <span class="span"><a href="#">Forgot password?</a></span>
+    <input class="submit" type="submit" value="Log in">
+    <span class="span">Don't have an account? <a href="#">Sign up</a></span>
+  </form>
+</body>
+<div class="toggleWrapper">
+    <input type="checkbox" class="dn" id="dn">
+    <label for="dn" class="toggle">
+        <span class="toggle__handler">
+            <span class="crater crater--1"></span>
+            <span class="crater crater--2"></span>
+            <span class="crater crater--3"></span>
+        </span>
+        <span class="star star--1"></span>
+        <span class="star star--2"></span>
+        <span class="star star--3"></span>
+        <span class="star star--4"></span>
+        <span class="star star--5"></span>
+        <span class="star star--6"></span>
+    </label>
+</div>
+<script src="{{ url_for('static', filename='js/login.js') }}"></script>
+</html>

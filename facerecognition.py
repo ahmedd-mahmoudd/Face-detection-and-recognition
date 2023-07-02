@@ -4,7 +4,6 @@ from deepface import DeepFace
 
 model = DeepFace.build_model("Facenet") 
 print("The model has been built!")
-
 def facerecognition(input,database) :
     inputimg_path = input
     data_base_path = database
@@ -23,9 +22,9 @@ def facerecognition(input,database) :
     print(inputimg_path, "\n" , data_base_path)
 
     result = DeepFace.verify(inputimg_path, data_base_path, enforce_detection=False)
+    print(result)
     confidence=(1-result['distance'])*100
     confidence = round(confidence, 2)
-
     if result["verified"]:
         print("The faces with confidence " +str(confidence) + "% are matched!")
         return True

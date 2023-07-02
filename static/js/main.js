@@ -51,3 +51,4 @@ function showCompareButton() {
     change =0;
     }
 }
+
