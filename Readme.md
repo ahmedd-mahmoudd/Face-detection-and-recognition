@@ -7,7 +7,7 @@ This is a PyQt5-based application that performs face recognition using the Deepf
 
 1. Clone the repository:
 
-    git clone https://github.com/ahmedd-mahmoudd/face-recognition-app.git
+    git clone  https://github.com/ahmedd-mahmoudd/face-recognition-app.git
 
 2. Install the required dependencies. Make sure you have Python 3(3.10.9) and pip installed, and then run:
 
