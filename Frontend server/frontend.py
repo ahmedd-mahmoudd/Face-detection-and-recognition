@@ -2,9 +2,10 @@ import os
 import base64
 from flask import Flask, render_template, request, jsonify
 import requests
-from werkzeug.utils import secure_filename
+
 
 app = Flask(__name__)
+
 app.config['UPLOAD_FOLDER'] = os.path.join(app.root_path, 'uploads')
 app.config['ALLOWED_EXTENSIONS'] = {'png', 'jpg', 'jpeg'}
 
@@ -13,7 +14,7 @@ def allowed_file(filename):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('login.html')
 
 @app.route('/compare', methods=['POST'])
 def compare_images():
@@ -37,7 +38,7 @@ def compare_images():
         'image2': database_image_base64
     }
 
-    response = requests.post('http://192.168.3.15:5000', json=data)
+    response = requests.post('http://192.168.3.15:5000/compare', json=data)
     result = response.json().get('result')
 
     return jsonify({'result': result})
