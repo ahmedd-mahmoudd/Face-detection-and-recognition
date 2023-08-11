@@ -7,7 +7,13 @@ This directory contains the frontend code for our web application. It's responsi
 - HTML5
 - CSS3
 - JavaScript
+- JWT
+- MongoDB
 - [Library/Framework] Flask
+- [Library/Framework] OpenCV
+- [Library/Framework] DeepFace
+- [Library/Framework] FaceNet
+
 
 ## Project Structure
 

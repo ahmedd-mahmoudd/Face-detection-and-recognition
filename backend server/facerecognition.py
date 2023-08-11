@@ -19,7 +19,7 @@ def facerecognition(input,database) :
 
         cv2.imwrite(output_path, face_roi)
 
-    print(inputimg_path, "\n" , data_base_path)
+    print("\n",inputimg_path, "__________vs___________" , data_base_path, "\n")
 
     result = DeepFace.verify(inputimg_path, data_base_path, enforce_detection=False)
     print(result)
@@ -33,4 +33,4 @@ def facerecognition(input,database) :
         return False
 
 if __name__ == "__main__":
-    facerecognition("input\\obama.jpg","Database\\obama.png")
+    facerecognition("backend server/images/Input/Donald3.jpeg","backend server/images/Input/Donald3.jpeg")
