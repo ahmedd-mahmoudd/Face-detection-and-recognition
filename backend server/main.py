@@ -29,7 +29,7 @@ users_collection = db["users"]
 
 @app.route('/test')
 def test():
-    return 'Server is up'
+    return jsonify({"status" : 'Server is up'}),200
 
 @app.route('/signup', methods=['POST'])
 def signup():
@@ -72,7 +72,7 @@ def signin():
     return jsonify({'access_token': access_token}), 200
 
 
-@app.route('/indentify', methods=['GET'])
+@app.route('/identify', methods=['GET'])
 @jwt_required()
 def protected_route():
     current_user = get_jwt_identity()
