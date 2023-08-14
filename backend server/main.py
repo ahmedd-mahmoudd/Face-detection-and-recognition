@@ -17,10 +17,10 @@ app.config['JWT_ACCESS_TOKEN_EXPIRES'] = datetime.timedelta(hours=1)
 jwt = JWTManager(app)
 mongo_url = os.environ.get("MONGO_URL")
 client = MongoClient(mongo_url)
-
-if client.list_database_names():
-    print("Connected to MongoDB successfully!")
-else:
+try:
+    if client.list_database_names():
+        print("Connected to MongoDB successfully!")
+except:
     print("Could not connect to MongoDB")
     exit()
 
