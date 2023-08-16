@@ -1,8 +1,13 @@
 import os
 import cv2
 from deepface import DeepFace
+from deepface.basemodels.Facenet import InceptionResNetV2
 
-model = DeepFace.build_model("Facenet") 
+
+
+# model = InceptionResNetV2()
+# model.load_weights("facenet_weights.h5")
+model_name="Facenet"
 print("The model has been built!")
 def facerecognition(input,database) :
     inputimg_path = input
@@ -21,7 +26,7 @@ def facerecognition(input,database) :
 
     print("\n",inputimg_path, "__________vs___________" , data_base_path, "\n")
 
-    result = DeepFace.verify(inputimg_path, data_base_path, enforce_detection=False)
+    result = DeepFace.verify(inputimg_path, data_base_path,model_name, enforce_detection=False)
     print(result)
     confidence=(1-result['distance'])*100
     confidence = round(confidence, 2)

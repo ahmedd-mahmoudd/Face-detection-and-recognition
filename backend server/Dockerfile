@@ -28,6 +28,17 @@ RUN apt update
 # Install required libraries for PyTorch
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
 
+# Install wget
+RUN apt install wget 
+
+# Create the directory for the model
+RUN mkdir -p /root/.deepface/weights
+
+RUN cd /root/.deepface/weights
+
+# Download the model
+RUN wget https://github.com/serengil/deepface_models/releases/download/v1.0/facenet_weights.h5
+
 # Execute the command to start the server
 CMD ["gunicorn", "--bind", "0.0.0.0:6000", "wsgi:app"]
 
