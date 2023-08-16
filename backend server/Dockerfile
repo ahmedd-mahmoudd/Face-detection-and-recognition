@@ -29,7 +29,7 @@ RUN apt update
 RUN apt-get install -y libglib2.0-0 libsm6 libxrender1 libxext6
 
 # Install wget
-RUN apt install wget 
+RUN apt install wget -y
 
 # Create the directory for the model
 RUN mkdir -p /root/.deepface/weights
