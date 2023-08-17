@@ -1,15 +1,17 @@
-var checkbox = document.getElementById("dn");
-checkbox.addEventListener("change", toggleDarkMode);
-//function to change the theme when the checkbox changes
-function toggleDarkMode() {
-    var checkbox = document.getElementById("dn");
-    var form = document.getElementById("form")
-    var body = document.body;
-  
-    if (checkbox.checked) {
-      form.style.background= "#F8FBFE";
-      body.style.backgroundColor = "#707070"; // Set background color to black
-    } else {
-      body.style.backgroundColor = "#efefef"; // Set background color to white
-    }
-  }
+const loginText = document.querySelector(".title-text .login");
+const loginForm = document.querySelector("form.login");
+const loginBtn = document.querySelector("label.login");
+const signupBtn = document.querySelector("label.signup");
+const signupLink = document.querySelector("form .signup-link a");
+signupBtn.onclick = (()=>{
+  loginForm.style.marginLeft = "-50%";
+  loginText.style.marginLeft = "-50%";
+});
+loginBtn.onclick = (()=>{
+  loginForm.style.marginLeft = "0%";
+  loginText.style.marginLeft = "0%";
+});
+signupLink.onclick = (()=>{
+  signupBtn.click();
+  return false;
+});

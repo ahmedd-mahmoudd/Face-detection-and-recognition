@@ -1,51 +1,55 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <meta charset="UTF-8">
+  <title>Signup</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
 </head>
-<body>
-    <div class="container">
-        <div class="tools">
-            <div class="circle">
-              <span class="red box"></span>
-            </div>
-            <div class="circle">
-              <span class="yellow box"></span>
-            </div>
-            <div class="circle">
-              <span class="green box"></span>
-            </div>
-          </div>
-          <div class="card__content">
-          </div>
-<form class="form" id="form">
-    <span class="input-span">
-    <label for="email" class="label">Email</label>
-    <input type="email" name="email" id="email"></span>
-    <span class="input-span">
-    <label for="password" class="label">Password</label>
-    <input type="password" name="password" id="password"></span>
-    <span class="span"><a href="#">Forgot password?</a></span>
-    <input class="submit" type="submit" value="Log in">
-    <span class="span">Don't have an account? <a href="#">Sign up</a></span>
-  </form>
-</body>
-<div class="toggleWrapper">
-    <input type="checkbox" class="dn" id="dn">
-    <label for="dn" class="toggle">
-        <span class="toggle__handler">
-            <span class="crater crater--1"></span>
-            <span class="crater crater--2"></span>
-            <span class="crater crater--3"></span>
-        </span>
-        <span class="star star--1"></span>
-        <span class="star star--2"></span>
-        <span class="star star--3"></span>
-        <span class="star star--4"></span>
-        <span class="star star--5"></span>
-        <span class="star star--6"></span>
-    </label>
+<div class="wrapper">
+  <div class="title-text">
+    <div class="title login">Login Form</div>
+    <div class="title signup">Signup Form</div>
+  </div>
+  <div class="form-container">
+    <div class="slide-controls">
+      <input type="radio" name="slide" id="login" checked>
+      <input type="radio" name="slide" id="signup">
+      <label for="login" class="slide login">Login</label>
+      <label for="signup" class="slide signup">Signup</label>
+      <div class="slider-tab"></div>
+    </div>
+    <div class="form-inner">
+      <form action="#" class="login">
+        <div class="field">
+          <input type="text" placeholder="Email Address" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div class="pass-link"><a href="#">Forgot password?</a></div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Login">
+        </div>
+        <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+      </form>
+      <form action="#" class="signup">
+        <div class="field">
+          <input type="text" placeholder="Email Address" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Password" required>
+        </div>
+        <div class="field">
+          <input type="password" placeholder="Confirm password" required>
+        </div>
+        <div class="field btn">
+          <div class="btn-layer"></div>
+          <input type="submit" value="Signup">
+        </div>
+      </form>
+    </div>
+  </div>
+  <script src="{{ url_for('static', filename='js/login.js') }}"></script>
 </div>
-<script src="{{ url_for('static', filename='js/login.js') }}"></script>
-</html>
