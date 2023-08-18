@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Face Recognition</title>
+    <link rel="stylesheet" href="static/css/main.css">
+</head>
+<body>
+    <div class="container">
+        <div class="tools">
+            <div class="circle">
+              <span class="red box"></span>
+            </div>
+            <div class="circle">
+              <span class="yellow box"></span>
+            </div>
+            <div class="circle">
+              <span class="green box"></span>
+            </div>
+          </div>
+          <div class="card__content">
+          </div>
+        <h1>Face Recognition</h1>
+        <form id="image-form" method="POST" action="/compare" enctype="multipart/form-data">
+            <label class="upload-btn" for="input-image">Upload Input Image</label>
+            <input type="file" id="input-image" name="input_image" accept=".jpg,.png" required><br><br>
+            <img id="input-image-preview" class="image-preview" src="" alt=""><br><br>
+            <label class="upload-btn" for="database-image">Upload Database Image</label>
+            <input type="file" id="database-image" name="database_image" accept=".jpg,.png" required><br><br>
+            <img id="database-image-preview" class="image-preview" src="" alt=""><br><br>
+            <input class="compare-button" type="submit" id="compare-button" value="Compare" style="display: inline-block; ">
+        </form>
+        <div class="result-container">
+            <h2 id="result-text"></h2>
+            <img id="result-image" src="" alt="">
+        </div>
+    </div>
+    <script src="static/js/main.js"></script>
+</body>
+</html>

@@ -6,9 +6,11 @@ from flask_jwt_extended import JWTManager, create_access_token, jwt_required, ge
 import datetime
 import bcrypt
 from facerecognition import facerecognition
+from flask_cors import CORS
 
 
 app = Flask(__name__)
+CORS(app) 
 
 secretKey = os.environ.get("SECRETKEY")
 app.config['JWT_SECRET_KEY'] = secretKey  # Change this to your actual secret key
@@ -117,4 +119,4 @@ def face_recognition():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=6000, debug=True)
+    app.run(host='0.0.0.0', port=3000, debug=True)
