@@ -1,40 +1,60 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Face Recognition</title>
-    <link rel="stylesheet" href="static/css/main.css">
+  <meta charset="UTF-8">
+  <title>Signup</title>
+  <link rel="stylesheet" href="static/css/index.css"">
 </head>
+
 <body>
-    <div class="container">
-        <div class="tools">
-            <div class="circle">
-              <span class="red box"></span>
-            </div>
-            <div class="circle">
-              <span class="yellow box"></span>
-            </div>
-            <div class="circle">
-              <span class="green box"></span>
-            </div>
-          </div>
-          <div class="card__content">
-          </div>
-        <h1>Face Recognition</h1>
-        <form id="image-form" method="POST" action="/compare" enctype="multipart/form-data">
-            <label class="upload-btn" for="input-image">Upload Input Image</label>
-            <input type="file" id="input-image" name="input_image" accept=".jpg,.png" required><br><br>
-            <img id="input-image-preview" class="image-preview" src="" alt=""><br><br>
-            <label class="upload-btn" for="database-image">Upload Database Image</label>
-            <input type="file" id="database-image" name="database_image" accept=".jpg,.png" required><br><br>
-            <img id="database-image-preview" class="image-preview" src="" alt=""><br><br>
-            <input class="compare-button" type="submit" id="compare-button" value="Compare" style="display: inline-block; ">
-        </form>
-        <div class="result-container">
-            <h2 id="result-text"></h2>
-            <img id="result-image" src="" alt="">
-        </div>
+  <div class="wrapper">
+    <div class="title-text">
+      <div class="title login">Login Form</div>
+      <div class="title signup">Signup Form</div>
     </div>
-    <script src="static/js/main.js"></script>
+    <div class="form-container">
+      <div class="slide-controls">
+        <input type="radio" name="slide" id="login" checked>
+        <input type="radio" name="slide" id="signup">
+        <label for="login" class="slide login">Login</label>
+        <label for="signup" class="slide signup">Signup</label>
+        <div class="slider-tab"></div>
+      </div>
+      <div class="form-inner">
+        <form action="#" class="login" id="login-form">
+          <div class="field">
+            <input type="text" placeholder="Username" required id="login-username">
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Password" required id="login-password" >
+          </div>
+          <div class="pass-link"><a href="#">Forgot password?</a></div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" name="login" value="Login">
+          </div>
+          <div class="signup-link">Not a member? <a href="#">Signup now</a></div>
+        </form>
+        <form action="#" class="signup"  id="signup-form">
+          <div class="field">
+            <input type="text" placeholder="Username" required id="signup-username">
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Password" required id="signup-password">
+          </div>
+          <div class="field">
+            <input type="password" placeholder="Confirm password" required id="signup-confirm-password">
+          </div>
+          <div class="field btn">
+            <div class="btn-layer"></div>
+            <input type="submit" value="Signup">
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </body>
+<script src="static/js/index.js"></script>
+
 </html>
