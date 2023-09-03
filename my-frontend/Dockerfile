@@ -1,5 +1,5 @@
 # Use the official Nginx image as the base image
-FROM nginx:latest
+FROM nginx:alpine3.18-slim
 
 # Copy the contents of your frontend app to the Nginx default directory
 COPY app /usr/share/nginx/html
