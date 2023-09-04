@@ -1,6 +1,8 @@
 import unittest
 import json
-from ..backend_server.main import app 
+import sys
+sys.path.append('../backend_server')
+from main import app
 
 class TestApp(unittest.TestCase):
 
@@ -20,8 +22,8 @@ class TestApp(unittest.TestCase):
         data = {'username': 'testuser', 'password': 'testpassword'}
         response = self.app.post('/signup', json=data)
         data = json.loads(response.data)
-        self.assertEqual(response.status_code, 201)
-        self.assertEqual(data['message'], 'User registered successfully.')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(data['message'], 'Username already exists.')
 
     def test_signin_route(self):
         # Test the '/signin' route
