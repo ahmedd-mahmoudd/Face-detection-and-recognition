@@ -1,5 +1,0 @@
-PyQt5==5.15.4
-opencv-python==4.5.3.56
-mediapipe==0.8.10
-deepface==0.0.68
-Pillow==8.4.0
