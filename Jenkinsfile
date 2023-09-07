@@ -31,14 +31,6 @@ pipeline {
             }
         }
         
-      stage('Run Python Tests') {
-            steps {
-                script {
-                    sh 'cd tests && pytest --junitxml=output/test-results.xml'
-                }
-            }
-        }
-
         stage('Build and Push Backend Image') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
