@@ -6,3 +6,6 @@ my-frontendsss
 setenv.sh
 .dist
 backend_server/__pycache__
+tests/output
+tests/__pycache__
+tests/.pytest_cache

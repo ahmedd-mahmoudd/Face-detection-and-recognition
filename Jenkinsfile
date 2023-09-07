@@ -6,20 +6,28 @@ pipeline {
     }
 
     stages {
-        stage('Install Dependencies') {
+         stage('Setup Virtual Environment') {
             steps {
                 script {
-                    sh 'cd backend_server
-                    pip install -r requirements.txt
-                    '
+                    sh 'python3 -m venv myenv'
+                    sh 'source myenv/bin/activate'
                 }
             }
         }
+
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'pip install -r backend_server/requirements.txt'
+                }
+            }
+        }
+
         stage('Run Python Tests') {
             steps {
                 script {
                     sh 'cd tests
-                    python
+                    pytest --junitxml=output/test-results.xml
                     '
                 }
             }
