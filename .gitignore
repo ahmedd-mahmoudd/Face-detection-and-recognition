@@ -1,0 +1,8 @@
+.vscode
+backend_server/__pycache__/*
+backend_server/env
+backend_server/scratch.py
+my-frontendsss
+setenv.sh
+.dist
+backend_server/__pycache__

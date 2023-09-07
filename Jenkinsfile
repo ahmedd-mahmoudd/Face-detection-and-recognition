@@ -6,10 +6,21 @@ pipeline {
     }
 
     stages {
+        stage('Install Dependencies') {
+            steps {
+                script {
+                    sh 'cd backend_server
+                    pip install -r requirements.txt
+                    '
+                }
+            }
+        }
         stage('Run Python Tests') {
             steps {
                 script {
-                    sh 'python -m unittest discover tests'
+                    sh 'cd tests
+                    python
+                    '
                 }
             }
         }
