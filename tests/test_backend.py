@@ -1,6 +1,5 @@
 import unittest
 import json
-import time
 import sys
 sys.path.append('../backend_server')
 from main import app

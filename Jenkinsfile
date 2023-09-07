@@ -26,9 +26,15 @@ pipeline {
         stage('Run Python Tests') {
             steps {
                 script {
-                    sh 'cd tests
-                    pytest --junitxml=output/test-results.xml
-                    '
+                    sh 'cd tests && pytest --junitxml=output/test-results.xml'
+                }
+            }
+        }
+        
+      stage('Run Python Tests') {
+            steps {
+                script {
+                    sh 'cd tests && pytest --junitxml=output/test-results.xml'
                 }
             }
         }
@@ -63,6 +69,15 @@ pipeline {
     }
 
     post {
+        always {
+            script {
+                sh 'deactivate' // Deactivate the virtual environment
+            }
+            cleanWs()
+        }
+        success {
+            echo "All tests passed. Proceeding with image builds and pushes."
+        }
         failure {
             echo "One or more tests failed. Skipping image builds and pushes."
         }
