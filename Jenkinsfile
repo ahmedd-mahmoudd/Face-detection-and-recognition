@@ -2,7 +2,7 @@
 pipeline {
     agent { label 'docker' }
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('DockerCredentialsUserPassword')
+        DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
     }
 
     stages {
@@ -37,7 +37,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
                         def backendImage = docker.build('xahmedmahmoudx/backend-server:latest', './backend_server')
                         backendImage.push()
                     }
@@ -51,7 +51,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', DOCKERHUB_CREDENTIALS) {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
                         def frontendImage = docker.build('your-dockerhub-username/my-frontend:latest', './my-frontend')
                         frontendImage.push()
                     }
