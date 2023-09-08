@@ -1,16 +1,24 @@
 
 pipeline {
-    agent { label 'docker' }
+    agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
     }
 
     stages {
+        stage('Checkout') {
+            steps {
+                script {
+                    git branch: 'WebUI', credentialsId: 'githublogin', url: 'https://github.com/ahmedd-mahmoudd/Face-detection-and-recognition.git'
+                }
+            }
+        }
+
          stage('Setup Virtual Environment') {
             steps {
                 script {
                     sh 'python3 -m venv myenv'
-                    sh 'source myenv/bin/activate'
+                    sh '. myenv/bin/activate'
                 }
             }
         }
@@ -18,7 +26,7 @@ pipeline {
         stage('Install Dependencies') {
             steps {
                 script {
-                    sh 'pip install -r backend_server/requirements.txt'
+                    sh 'cd backend_server && pip3 install -r requirements.txt'
                 }
             }
         }
