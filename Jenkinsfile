@@ -3,6 +3,8 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
+        MONGO_URL = credentials('MONGO_URL')
+        SECRETKEY = credentials('SECRETKEY')
     }
 
     stages {
@@ -30,11 +32,21 @@ pipeline {
                 }
             }
         }
-
+        
+        stage('Putting env variable') {
+            steps {
+                script {
+                    env.MONGO_URL = MONGO_URL
+                    env.SECRETKEY = SECRETKEY
+                }
+                
+            }
+        }
+        
         stage('Run Python Tests') {
             steps {
                 script {
-                    sh 'cd tests && pytest --junitxml=output/test-results.xml'
+                    sh 'cd tests && python3 -m pytest --junitxml=output/test-result.xml'
                 }
             }
         }
@@ -71,7 +83,7 @@ pipeline {
     post {
         always {
             script {
-                sh 'deactivate' // Deactivate the virtual environment
+                sh 'deactivate' 
             }
             cleanWs()
         }
