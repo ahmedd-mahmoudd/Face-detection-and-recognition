@@ -9,3 +9,5 @@ backend_server/__pycache__
 tests/output
 tests/__pycache__
 tests/.pytest_cache
+env2
+backend_server/requirementsold.txt
