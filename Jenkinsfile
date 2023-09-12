@@ -72,7 +72,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
-                        def frontendImage = docker.build('your-dockerhub-username/my-frontend:latest', './my-frontend')
+                        def frontendImage = docker.build('xahmedmahmoudx/my-frontend:latest', './my-frontend')
                         frontendImage.push()
                     }
                 }
@@ -83,7 +83,7 @@ pipeline {
     post {
         always {
             script {
-                sh 'deactivate' 
+               sh 'exit' 
             }
             cleanWs()
         }
