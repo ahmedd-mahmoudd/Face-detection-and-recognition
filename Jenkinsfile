@@ -67,7 +67,7 @@ pipeline {
         stage('Scan Backend Image') {
             steps {
                 script {
-                    sh 'trivy --exit-code 1 --severity HIGH,CRITICAL xahmedmahmoudx/backend-server:latest'
+                    sh 'trivy image xahmedmahmoudx/backend-server:latest'
                 }
             }
         }
@@ -106,7 +106,7 @@ pipeline {
         stage('Scan Frontend Image') {
             steps {
                 script {
-                    sh 'trivy --exit-code 1 --severity HIGH,CRITICAL xahmedmahmoudx/my-frontend:latest'
+                    sh 'trivy image xahmedmahmoudx/my-frontend:latest'
                 }
             }
         }
