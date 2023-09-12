@@ -51,7 +51,7 @@ pipeline {
             }
         }
         
-        stage('Build and Push Backend Image') {
+        stage('Build Backend Image') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
             }
@@ -59,13 +59,38 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
                         def backendImage = docker.build('xahmedmahmoudx/backend-server:latest', './backend_server')
-                        backendImage.push()
                     }
                 }
             }
         }
 
-        stage('Build and Push Frontend Image') {
+        stage('Scan Backend Image') {
+            steps {
+                script {
+                    sh 'trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL xahmedmahmoudx/backend-server:latest'
+                }
+            }
+        }
+
+        stage('Push Backend Image') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
+                        def backendImage = docker.image('xahmedmahmoudx/backend-server:latest')
+                        if (backendImage.push()) {
+                            echo "Backend image pushed successfully."
+                        } else {
+                            error "Failed to push backend image."
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Build Frontend Image') {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
             }
@@ -73,7 +98,32 @@ pipeline {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
                         def frontendImage = docker.build('xahmedmahmoudx/my-frontend:latest', './my-frontend')
-                        frontendImage.push()
+                    }
+                }
+            }
+        }
+
+        stage('Scan Frontend Image') {
+            steps {
+                script {
+                    sh 'trivy --no-progress --exit-code 1 --severity HIGH,CRITICAL xahmedmahmoudx/my-frontend:latest'
+                }
+            }
+        }
+
+        stage('Push Frontend Image') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
+                        def frontendImage = docker.image('xahmedmahmoudx/my-frontend:latest')
+                        if (frontendImage.push()) {
+                            echo "Frontend image pushed successfully."
+                        } else {
+                            error "Failed to push frontend image."
+                        }
                     }
                 }
             }
