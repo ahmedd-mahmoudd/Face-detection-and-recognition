@@ -3,6 +3,7 @@ pipeline {
     agent any
     environment {
         DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
+        dockerpsw = credentials('DockerPSW')
         MONGO_URL = credentials('MONGO_URL')
         SECRETKEY = credentials('SECRETKEY')
     }
@@ -57,10 +58,9 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
-                        def backendImage = docker.build('xahmedmahmoudx/backend-server:latest', './backend_server')
+                       sh'docker build -t xahmedmahmoudx/backend-server:latest ./backend_server'
                     }
-                }
+                
             }
         }
 
@@ -76,18 +76,15 @@ pipeline {
             when {
                 expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
             }
+            
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
-                        def backendImage = docker.image('xahmedmahmoudx/backend-server:latest')
-                        if (backendImage.push()) {
-                            echo "Backend image pushed successfully."
-                        } else {
-                            error "Failed to push backend image."
-                        }
-                    }
+                    sh '''docker login -u xahmedmahmoudx -p $dockerpsw
+                        docker push xahmedmahmoudx/backend-server:latest'''
                 }
             }
+                
+            
         }
 
         stage('Build Frontend Image') {
@@ -96,9 +93,9 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
-                        def frontendImage = docker.build('xahmedmahmoudx/my-frontend:latest', './my-frontend')
-                    }
+                    sh '''
+                        docker build -t xahmedmahmoudx/my-frontend:latest ./my-frontend
+                    '''
                 }
             }
         }
@@ -117,14 +114,8 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://registry.hub.docker.com', 'dockerlogin') {
-                        def frontendImage = docker.image('xahmedmahmoudx/my-frontend:latest')
-                        if (frontendImage.push()) {
-                            echo "Frontend image pushed successfully."
-                        } else {
-                            error "Failed to push frontend image."
-                        }
-                    }
+                    sh '''docker login -u xahmedmahmoudx -p $dockerpsw
+                        docker push xahmedmahmoudx/my-frontend:latest'''
                 }
             }
         }
