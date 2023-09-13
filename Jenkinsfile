@@ -135,7 +135,7 @@ pipeline {
             echo "All tests passed. Proceeding with image builds and pushes."
 
             emailext body: 'Test reports are attached.', 
-                  subject: 'The build number # $BUILD_NUMBER has succeded and test reports are attached',
+                  subject: 'The build number # $BUILD_NUMBER for $PROJECT_NAME has succeded and test reports are attached',
                   mimeType: 'text/html',
                   to: 'mahmouda091.am@gmail.com',
                   attachmentsPattern: '**/output/test-result.xml,**/trivy-report-frontend.json,**/trivy-report-backend.json'
@@ -145,7 +145,7 @@ pipeline {
         failure {
             echo "One or more tests failed. Skipping image builds and pushes."
             emailext body: 'Test reports are attached.', 
-                  subject: 'The build number # $BUILD_NUMBER has faild and test reports are attached',
+                  subject: 'The build number # $BUILD_NUMBER for $PROJECT_NAME has faild and test reports are attached',
                   mimeType: 'text/html',
                   to: 'mahmouda091.am@gmail.com',
                   attachmentsPattern: '**/output/test-result.xml,**/trivy-report-frontend.json,**/trivy-report-backend.json'
