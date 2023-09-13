@@ -2,7 +2,6 @@
 pipeline {
     agent any
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
         dockerpsw = credentials('DockerPSW')
         MONGO_URL = credentials('MONGO_URL')
         SECRETKEY = credentials('SECRETKEY')
@@ -67,7 +66,7 @@ pipeline {
         stage('Scan Backend Image') {
             steps {
                 script {
-                    sh 'trivy image xahmedmahmoudx/backend-server:latest'
+                    sh 'trivy image --format json --output trivy-report-backend.json backend-server:latest'
                 }
             }
         }
@@ -103,7 +102,7 @@ pipeline {
         stage('Scan Frontend Image') {
             steps {
                 script {
-                    sh 'trivy image xahmedmahmoudx/my-frontend:latest'
+                    sh 'trivy image --format json --output trivy-report-frontend.json xahmedmahmoudx/my-frontend:latest'
                 }
             }
         }
@@ -124,15 +123,32 @@ pipeline {
     post {
         always {
             script {
-               sh 'exit' 
+                junit '**/output/test-result.xml'
+                archiveArtifacts '**/output/test-result.xml'
+                archiveArtifacts '**/trivy-report-frontend.json'
+                archiveArtifacts '**/trivy-report-backend.json'
+                sh 'exit' 
             }
-            cleanWs()
         }
         success {
             echo "All tests passed. Proceeding with image builds and pushes."
+
+            emailext body: 'Test reports are attached.', 
+                  subject: 'Test Reports',
+                  mimeType: 'text/html',
+                  to: 'ahmeduchi8@gmail.com',
+                  attachmentsPattern: '**/output/test-result.xml,**/trivy-report.json'
+            cleanWs()
+            
         }
         failure {
             echo "One or more tests failed. Skipping image builds and pushes."
+            emailext body: 'Test reports are attached.', 
+                  subject: 'Test Reports',
+                  mimeType: 'text/html',
+                  to: 'ahmeduchi8@gmail.com',
+                  attachmentsPattern: '**/output/test-result.xml,**/trivy-report.json'
+            cleanWs()      
         }
     }
 }
