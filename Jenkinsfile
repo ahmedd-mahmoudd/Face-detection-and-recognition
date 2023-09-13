@@ -2,6 +2,7 @@
 pipeline {
     agent any
     environment {
+        DOCKERHUB_CREDENTIALS = credentials('dockerlogin')
         dockerpsw = credentials('DockerPSW')
         MONGO_URL = credentials('MONGO_URL')
         SECRETKEY = credentials('SECRETKEY')
@@ -63,28 +64,28 @@ pipeline {
             }
         }
 
-        stage('Scan Backend Image') {
-            steps {
-                script {
-                    sh 'trivy image --format json --output trivy-report-backend.json backend-server:latest'
-                }
-            }
-        }
+        // stage('Scan Backend Image') {
+        //     steps {
+        //         script {
+        //             sh 'trivy image --format json --output trivy-report-backend.json backend-server:latest'
+        //         }
+        //     }
+        // }
 
-        stage('Push Backend Image') {
-            when {
-                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-            }
+        // stage('Push Backend Image') {
+        //     when {
+        //         expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+        //     }
             
-            steps {
-                script {
-                    sh '''docker login -u xahmedmahmoudx -p $dockerpsw
-                        docker push xahmedmahmoudx/backend-server:latest'''
-                }
-            }
+        //     steps {
+        //         script {
+        //             sh '''docker login -u xahmedmahmoudx -p $dockerpsw
+        //                 docker push xahmedmahmoudx/backend-server:latest'''
+        //         }
+        //     }
                 
             
-        }
+        // }
 
         stage('Build Frontend Image') {
             when {
@@ -126,7 +127,7 @@ pipeline {
                 junit '**/output/test-result.xml'
                 archiveArtifacts '**/output/test-result.xml'
                 archiveArtifacts '**/trivy-report-frontend.json'
-                archiveArtifacts '**/trivy-report-backend.json'
+                // archiveArtifacts '**/trivy-report-backend.json'
                 sh 'exit' 
             }
         }
@@ -134,20 +135,20 @@ pipeline {
             echo "All tests passed. Proceeding with image builds and pushes."
 
             emailext body: 'Test reports are attached.', 
-                  subject: 'Test Reports',
+                  subject: 'The build number # $BUILD_NUMBER has succeded and test reports are attached',
                   mimeType: 'text/html',
-                  to: 'ahmeduchi8@gmail.com',
-                  attachmentsPattern: '**/output/test-result.xml,**/trivy-report.json'
+                  to: 'mahmouda091.am@gmail.com',
+                  attachmentsPattern: '**/output/test-result.xml,**/trivy-report-frontend.json,**/trivy-report-backend.json'
             cleanWs()
             
         }
         failure {
             echo "One or more tests failed. Skipping image builds and pushes."
             emailext body: 'Test reports are attached.', 
-                  subject: 'Test Reports',
+                  subject: 'The build number # $BUILD_NUMBER has faild and test reports are attached',
                   mimeType: 'text/html',
-                  to: 'ahmeduchi8@gmail.com',
-                  attachmentsPattern: '**/output/test-result.xml,**/trivy-report.json'
+                  to: 'mahmouda091.am@gmail.com',
+                  attachmentsPattern: '**/output/test-result.xml,**/trivy-report-frontend.json,**/trivy-report-backend.json'
             cleanWs()      
         }
     }
