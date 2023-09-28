@@ -43,6 +43,6 @@ RUN wget https://github.com/serengil/deepface_models/releases/download/v1.0/face
 RUN pip install flask_cors
 
 # Execute the command to start the server
-CMD ["gunicorn", "--bind", "0.0.0.0:6000", "wsgi:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:3000", "wsgi:app"]
 
-EXPOSE 6000
+EXPOSE 3000

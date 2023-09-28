@@ -1,6 +1,9 @@
 # Use the official Nginx image as the base image
 FROM nginx:alpine3.18-slim
 
+# Copy the Nginx configuration file
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 # Copy the contents of your frontend app to the Nginx default directory
 COPY app /usr/share/nginx/html
 
