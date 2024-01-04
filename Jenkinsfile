@@ -64,28 +64,28 @@ pipeline {
             }
         }
 
-        // stage('Scan Backend Image') {
-        //     steps {
-        //         script {
-        //             sh 'trivy image --format json --output trivy-report-backend.json backend-server:latest'
-        //         }
-        //     }
-        // }
+        stage('Scan Backend Image') {
+            steps {
+                script {
+                    sh 'trivy image --format json --output trivy-report-backend.json backend-server:latest'
+                }
+            }
+        }
 
-        // stage('Push Backend Image') {
-        //     when {
-        //         expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
-        //     }
+        stage('Push Backend Image') {
+            when {
+                expression { currentBuild.resultIsBetterOrEqualTo('SUCCESS') }
+            }
             
-        //     steps {
-        //         script {
-        //             sh '''docker login -u xahmedmahmoudx -p $dockerpsw
-        //                 docker push xahmedmahmoudx/backend-server:latest'''
-        //         }
-        //     }
+            steps {
+                script {
+                    sh '''docker login -u xahmedmahmoudx -p $dockerpsw
+                        docker push xahmedmahmoudx/backend-server:latest'''
+                }
+            }
                 
             
-        // }
+        }
 
         stage('Build Frontend Image') {
             when {
