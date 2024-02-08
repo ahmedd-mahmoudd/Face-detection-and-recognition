@@ -11,6 +11,5 @@ tests/__pycache__
 tests/.pytest_cache
 env2
 backend_server/requirementsold.txt
-Terraform
 DockerCommands
 .env
