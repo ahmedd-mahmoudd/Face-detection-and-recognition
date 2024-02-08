@@ -32,3 +32,17 @@ you need to run the docker images for the frontend and backend by running the fo
 ```bash
 docker-compose up
 ```
+
+To run the project on AWS, you need to install Jenkins and Terraform on your machine and then you can use the Jenkinsfile and the terraform files to deploy the project on AWS.
+
+### First
+
+You will need to set the environment variables using the setEnvVar.sh file as mentioned above. and using jenkins credentials to store the dockerhub credentials.
+
+### Second
+
+Run the pipeline on Jenkins and the pipeline will build the docker images and push them to dockerhub. (Note: you need to change the dockerhub username in the Jenkinsfile)
+
+### Third
+
+Run the terraform files to deploy the project on AWS. (Note: you need to change the AWS credentials in the terraform files)
