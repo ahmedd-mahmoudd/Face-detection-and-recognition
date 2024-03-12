@@ -46,3 +46,4 @@ Run the pipeline on Jenkins and the pipeline will build the docker images and pu
 ### Third
 
 Run the terraform files to deploy the project on AWS. (Note: you need to change the AWS credentials in the terraform files)
+

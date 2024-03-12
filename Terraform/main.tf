@@ -38,16 +38,26 @@ resource "aws_subnet" "backend_subnet_2" {
   availability_zone = "us-east-1b"  
 }
 
-# Create a NAT Gateway and Elastic IP
-resource "aws_eip" "nat_eip" {}
+# Create a 2 NAT Gateway and Elastic IP
+resource "aws_eip" "nat_eip_1" {}
 
-resource "aws_nat_gateway" "nat_gateway" {
-  allocation_id = aws_eip.nat_eip.id
-  subnet_id     = aws_subnet.public_subnet.id
+resource "aws_eip" "nat_eip_2" {}
+
+resource "aws_nat_gateway" "nat_gateway_1" {
+  allocation_id = aws_eip.nat_eip_1.id
+  subnet_id     = aws_subnet.backend_subnet_1.id
+  depends_on     = [ aws_eip.nat_eip_1 ]
 }
 
+resource "aws_nat_gateway" "nat_gateway_2" {
+  allocation_id = aws_eip.nat_eip_2.id
+  subnet_id     = aws_subnet.backend_subnet_2.id
+  depends_on     = [ aws_eip.nat_eip_2 ]
+}
+
+
 # Create a route table for the private subnets
-resource "aws_route_table" "private_route_table" {
+resource "aws_route_table" "backend_subnet_1_route_table" {
   vpc_id = aws_vpc.my_vpc.id
 
   route {
