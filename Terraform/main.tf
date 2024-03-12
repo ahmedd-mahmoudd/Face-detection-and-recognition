@@ -1,54 +1,3 @@
-terraform {
-  backend "s3" {
-    bucket         = "devops-directive-tf-state-uchiha"
-    key            = "03-basics/import-bootstrap/terraform.tfstate"
-    region         = "us-east-1"
-    dynamodb_table = "terraform-state-locking"
-    encrypt        = true
-  }
-
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.0"
-    }
-  }
-}
-
-provider "aws" {
-  region = "us-east-1"
-}
-
-resource "aws_s3_bucket" "terraform_state" {
-  bucket        = "devops-directive-tf-state-uchiha" 
-  force_destroy = true
-}
-
-resource "aws_s3_bucket_versioning" "terraform_bucket_versioning" {
-  bucket = aws_s3_bucket.terraform_state.id
-  versioning_configuration {
-    status = "Enabled"
-  }
-}
-
-resource "aws_s3_bucket_server_side_encryption_configuration" "terraform_state_crypto_conf" {
-  bucket = aws_s3_bucket.terraform_state.bucket 
-  rule {
-    apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
-    }
-  }
-}
-
-resource "aws_dynamodb_table" "terraform_locks" {
-  name         = "terraform-state-locking"
-  billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "LockID"
-  attribute {
-    name = "LockID"
-    type = "S"
-  }
-}
 
 # Create a new VPC
 resource "aws_vpc" "my_vpc" {
@@ -63,23 +12,29 @@ resource "aws_internet_gateway" "my_igw" {
 }
 
 # Create a public subnet
-resource "aws_subnet" "public_subnet" {
+resource "aws_subnet" "frontend_subnet_1" {
   vpc_id                  = aws_vpc.my_vpc.id
   cidr_block              = "10.0.1.0/24" 
   availability_zone       = "us-east-1a"  
   map_public_ip_on_launch = true
 }
+resource "aws_subnet" "frontend_subnet_2" {
+  vpc_id                  = aws_vpc.my_vpc.id
+  cidr_block              = "10.0.2.0/24" 
+  availability_zone       = "us-east-1b"  
+  map_public_ip_on_launch = true
+}
 
 # Create private subnets
-resource "aws_subnet" "private_subnet_1" {
+resource "aws_subnet" "backend_subnet_1" {
   vpc_id            = aws_vpc.my_vpc.id
-  cidr_block        = "10.0.2.0/24" 
+  cidr_block        = "10.0.3.0/24" 
   availability_zone = "us-east-1a"  
 }
 
-resource "aws_subnet" "private_subnet_2" {
+resource "aws_subnet" "backend_subnet_2" {
   vpc_id            = aws_vpc.my_vpc.id
-  cidr_block        = "10.0.3.0/24" 
+  cidr_block        = "10.0.4.0/24" 
   availability_zone = "us-east-1b"  
 }
 
