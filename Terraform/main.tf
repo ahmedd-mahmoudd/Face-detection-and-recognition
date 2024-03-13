@@ -5,23 +5,26 @@ resource "aws_vpc" "my_vpc" {
   enable_dns_hostnames = true
 }
 
-# Create an internet gateway and attach it to the VPC
+# Create an internet gateway and attach it to the VPC (Alb)
 resource "aws_internet_gateway" "my_igw" {
   vpc_id = aws_vpc.my_vpc.id
 }
 
-# Create a public subnet
-resource "aws_subnet" "frontend_subnet_1" {
+# Create the frontend subnets
+resource "aws_subnet" "public_subnet_1" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.0.1.0/24" 
   availability_zone = "us-east-1a"  
+  map_public_ip_on_launch = true
 }
 
-resource "aws_subnet" "frontend_subnet_2" {
+resource "aws_subnet" "public_subnet_2" {
   vpc_id            = aws_vpc.my_vpc.id
   cidr_block        = "10.0.2.0/24" 
-  availability_zone = "us-east-1b"  
+  availability_zone = "us-east-1a"  
+  map_public_ip_on_launch = true
 }
+
 
 # Create private subnets
 resource "aws_subnet" "backend_subnet_1" {
@@ -53,6 +56,9 @@ resource "aws_nat_gateway" "nat_gateway_2" {
   depends_on    = [aws_eip.nat_eip_2]
 }
 
+
+
+
 # Create a route table for the backend subnets
 resource "aws_route_table" "backend_subnet_1_route_table" {
   vpc_id = aws_vpc.my_vpc.id
@@ -71,6 +77,30 @@ resource "aws_route_table" "backend_subnet_2_route_table" {
     gateway_id = aws_nat_gateway.nat_gateway_2.id
   }
 }
+
+
+# Create a route table for the ALB subnets
+resource "aws_route_table" "public_subnet_route_table" {
+  vpc_id = aws_vpc.my_vpc.id
+
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.my_igw.id
+  }
+}
+
+
+
+# Associate public subnets with the route table
+resource "aws_route_table_association" "public_subnet_1_association" {
+  subnet_id      = aws_subnet.public_subnet_1.id
+  route_table_id = aws_route_table.public_subnet_route_table.id
+}
+resource "aws_route_table_association" "public_subnet_2_association" {
+  subnet_id      = aws_subnet.public_subnet_2.id
+  route_table_id = aws_route_table.public_subnet_route_table.id
+}
+
 
 # Associate private subnets with the route table
 resource "aws_route_table_association" "backend_subnet_1_association" {
@@ -112,7 +142,7 @@ resource "aws_security_group" "instance_frontend_sg" {
 
   # Allow inbound traffic on port 80 from ALB
   ingress {
-    from_port       = 80
+    from_port       = 80 
     to_port         = 80
     protocol        = "tcp"
     security_groups = [aws_security_group.alb_security_group.id]
@@ -154,7 +184,7 @@ resource "aws_lb" "my_alb" {
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_security_group.id]
-  subnets            = [aws_subnet.frontend_subnet_1.id, aws_subnet.frontend_subnet_2.id]
+  subnets            = [aws_subnet.public_subnet_1.id, aws_subnet.public_subnet_2.id]
 
   tags = {
     Name = "My ALB"
@@ -167,6 +197,8 @@ resource "aws_lb_target_group" "my_target_group" {
   port     = 80
   protocol = "HTTP"
   vpc_id   = aws_vpc.my_vpc.id
+  target_type = "subnet"
+  
 
   health_check {
     path = "/"
