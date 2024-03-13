@@ -10,7 +10,7 @@ In this project, we aim to develop a system for face detection and recognition u
 2- Backend (Python, Flask, WSGI, OpenCV, bcrypt)   ----> Docker image
 3- mongoDB for Authentication  ----> Cloud mongoDB (you can use local mongoDB through the setEnvVar.sh file)
 
-![Solution diagram]()
+![Solution diagram](https://github.com/ahmedd-mahmoudd/Face-detection-and-recognition/blob/WebUI/images/terraform.jpg)
 
 ## Installation
 
