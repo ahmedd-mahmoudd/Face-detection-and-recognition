@@ -2,6 +2,7 @@
 
 echo "Setting MONGO_URL..."
 export MONGO_URL="put your mongo url here"
+terraform apply -var="mongo_url=${mongo_url}"
 
 #you can generate a secret key using the following command:
 #openssl rand -hex 32
